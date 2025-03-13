@@ -1,0 +1,9 @@
+{
+	"name": "ADF-DE-FINAL-ASSESSMENT-1",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "612e19dc-20a5-4a23-a83e-a0853f526a75",
+		"tenantId": "2800c0a0-70e9-49be-8733-faeaa6aced99"
+	}
+}
