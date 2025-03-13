@@ -1,0 +1,42 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "ADF-DE-FINAL-ASSESSMENT-1"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"Snowflake1_password": {
+			"value": ""
+		},
+		"SqlServer1_password": {
+			"value": ""
+		},
+		"AzureBlobStorage2_sasUri": {
+			"value": ""
+		},
+		"Snowflake1_properties_typeProperties_database": {
+			"value": "RAW_DB"
+		},
+		"SqlServer1_properties_typeProperties_server": {
+			"value": "JM-DKT-053"
+		},
+		"SqlServer1_properties_typeProperties_database": {
+			"value": "db_a1"
+		},
+		"SqlServer1_properties_typeProperties_userName": {
+			"value": "azuread\\suryaprakashk"
+		},
+		"linkedService1_sasUri": {
+			"value": ""
+		},
+		"AzureBlobStorage289_properties_privateLinkResourceId": {
+			"value": "/subscriptions/f50d13bc-9edb-41ee-8ac0-72c11b47adec/resourceGroups/RG_DE_FINAL_ASSESSMENT/providers/Microsoft.Storage/storageAccounts/storage0for0de"
+		},
+		"AzureBlobStorage289_properties_groupId": {
+			"value": "blob"
+		}
+	}
+}
