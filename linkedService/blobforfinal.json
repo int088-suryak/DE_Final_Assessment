@@ -5,8 +5,8 @@
 		"annotations": [],
 		"type": "AzureBlobStorage",
 		"typeProperties": {
-			"sasUri": "https://storage0for0de.blob.core.windows.net/",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDc4REZDNzVDLTY2MTItNEZDQi04NkYyLTBGNDdEMjE1RkZFNl82ZjViZTQyNi0xNTNhLTQ2MjEtYjRkMC1kNmE2ZGExM2U0ZWEiDQp9"
+			"sasUri": "https://storage0for0de-microsoftrouting.blob.core.windows.net/",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDc4REZDNzVDLTY2MTItNEZDQi04NkYyLTBGNDdEMjE1RkZFNl9jZWFiMGMxZS1kMTQxLTQ3NWEtYTdjMS1jOGQwMjY2OTI1ZTYiDQp9"
 		},
 		"connectVia": {
 			"referenceName": "integrationRuntime2",
