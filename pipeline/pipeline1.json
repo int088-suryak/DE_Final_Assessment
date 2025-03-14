@@ -29,51 +29,19 @@
 					"enableStaging": true,
 					"stagingSettings": {
 						"linkedServiceName": {
-							"referenceName": "AzureBlobStorage2",
+							"referenceName": "blobforfinal",
 							"type": "LinkedServiceReference"
 						},
-						"path": ""
-					},
-					"translator": {
-						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "company",
-									"type": "String"
-								},
-								"sink": {
-									"name": "COMPANY",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "customer_id",
-									"type": "String"
-								},
-								"sink": {
-									"name": "CUSTOMER_ID",
-									"type": "Int64"
-								}
-							},
-							{
-								"source": {
-									"name": "customername",
-									"type": "String"
-								},
-								"sink": {
-									"name": "CUSTOMERNAME",
-									"type": "String"
-								}
-							}
-						]
+						"path": "suryaprakash"
 					}
 				},
 				"inputs": [
 					{
 						"referenceName": "SqlServerTable1",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"tables": "\"\""
+						}
 					}
 				],
 				"outputs": [
