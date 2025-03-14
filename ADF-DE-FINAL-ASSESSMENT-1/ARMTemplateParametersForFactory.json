@@ -5,9 +5,6 @@
 		"factoryName": {
 			"value": "ADF-DE-FINAL-ASSESSMENT-1"
 		},
-		"AzureBlobStorage1_connectionString": {
-			"value": ""
-		},
 		"Snowflake1_password": {
 			"value": ""
 		},
@@ -28,6 +25,9 @@
 		},
 		"SqlServer1_properties_typeProperties_userName": {
 			"value": "azuread\\suryaprakashk"
+		},
+		"blobforfinal_sasUri": {
+			"value": ""
 		},
 		"linkedService1_sasUri": {
 			"value": ""

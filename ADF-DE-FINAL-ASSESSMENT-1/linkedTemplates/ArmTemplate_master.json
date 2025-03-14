@@ -7,10 +7,6 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "ADF-DE-FINAL-ASSESSMENT-1"
 		},
-		"AzureBlobStorage1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
-		},
 		"Snowflake1_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Snowflake1'"
@@ -38,6 +34,10 @@
 		"SqlServer1_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "azuread\\suryaprakashk"
+		},
+		"blobforfinal_sasUri": {
+			"type": "secureString",
+			"metadata": "Secure string for 'sasUri' of 'blobforfinal'"
 		},
 		"linkedService1_sasUri": {
 			"type": "secureString",
@@ -84,9 +84,6 @@
 					"SqlServer1_password": {
 						"value": "[parameters('SqlServer1_password')]"
 					},
-					"AzureBlobStorage1_connectionString": {
-						"value": "[parameters('AzureBlobStorage1_connectionString')]"
-					},
 					"Snowflake1_properties_typeProperties_database": {
 						"value": "[parameters('Snowflake1_properties_typeProperties_database')]"
 					},
@@ -107,6 +104,9 @@
 					},
 					"AzureBlobStorage2_sasUri": {
 						"value": "[parameters('AzureBlobStorage2_sasUri')]"
+					},
+					"blobforfinal_sasUri": {
+						"value": "[parameters('blobforfinal_sasUri')]"
 					},
 					"linkedService1_sasUri": {
 						"value": "[parameters('linkedService1_sasUri')]"
