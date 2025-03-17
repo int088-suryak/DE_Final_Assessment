@@ -2,7 +2,7 @@ WITH transactions AS (
     SELECT
         customer_id,
         DATE_TRUNC('month',PAYMENT_MONTH) AS transaction_month
-    FROM {{ ref('stg_transactions') }}
+    FROM {{ ref('transform_final') }}
 ),
  
 max_month AS (
