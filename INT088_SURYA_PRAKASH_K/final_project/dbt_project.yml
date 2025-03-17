@@ -34,11 +34,14 @@ models:
     # Config indicated by + and applies to all files under models/example/
     +schema: proj
     staging:
+      description: "Raw data is directly imported and no alterations are done"
       +materialized: table
       +schema: proj_staging
     transform:
+      description: "From the staging are tables are imported and transformations are done like type casting and null values removal"
       +materialized: table
       +schema: proj_transform
     marts:
+      description: "From the transformation layer, the transformed data is used here for various KPI analysis"
       +materialized: table
       +schema: proj_marts
