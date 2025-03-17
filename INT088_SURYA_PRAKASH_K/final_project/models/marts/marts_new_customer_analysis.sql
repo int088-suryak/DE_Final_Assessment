@@ -1,40 +1,40 @@
 WITH transactions AS (
     SELECT
         customer_id,
-        DATE_TRUNC('month',PAYMENT_MONTH) AS tran_month
+        DATE_TRUNC('month',PAYMENT_MONTH) AS transaction_month
     FROM {{ ref('stg_transactions') }}
 ),
  
 max_month AS (
-    SELECT MAX(tran_month) AS latest_month FROM transactions
+    SELECT MAX(transaction_month) AS latest_month FROM transactions
 ),
  
 churn_status AS (
     SELECT
         t.customer_id,
-        MAX(t.tran_month) AS last_transaction_month,
+        MAX(t.transaction_month) AS last_transaction_month,
         CASE
-            WHEN MAX(t.tran_month) <= DATEADD('month', -3, m.latest_month) THEN 1
+            WHEN MAX(t.transaction_month) <= DATEADD('month', -3, m.latest_month) THEN 1
             ELSE 0
         END AS L3m_churn_status,
         CASE
-            WHEN MIN(t.tran_month) >= DATEADD('month', -3, m.latest_month) THEN 1
+            WHEN MIN(t.transaction_month) >= DATEADD('month', -3, m.latest_month) THEN 1
             ELSE 0
         END AS L3MCustomer_Status,
         CASE
-            WHEN MAX(t.tran_month) <= DATEADD('month', -1, m.latest_month) THEN 1
+            WHEN MAX(t.transaction_month) <= DATEADD('month', -1, m.latest_month) THEN 1
             ELSE 0
         END AS LM_churn_status,
         CASE
-            WHEN MIN(t.tran_month) >= DATEADD('month', -1, m.latest_month) THEN 1
+            WHEN MIN(t.transaction_month) >= DATEADD('month', -1, m.latest_month) THEN 1
             ELSE 0
         END AS LM_Customer_Status,
         CASE
-            WHEN MAX(t.tran_month) <= DATEADD('month', -12, m.latest_month) THEN 1
+            WHEN MAX(t.transaction_month) <= DATEADD('month', -12, m.latest_month) THEN 1
             ELSE 0
         END AS Ltm_churn_status,
         CASE
-            WHEN MIN(t.tran_month) >= DATEADD('month', -12, m.latest_month) THEN 1
+            WHEN MIN(t.transaction_month) >= DATEADD('month', -12, m.latest_month) THEN 1
             ELSE 0
         END AS Ltm_Customer_Status
     FROM transactions t
