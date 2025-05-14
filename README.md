@@ -1,67 +1,111 @@
-# Sage Intacct Data Source Ingestion Connector - README
+Thanks for pointing that out, Surya! Here's the **updated and complete `README.md` file** with your requested topics included:
 
-## Overview
+---
 
-This document provides detailed information about the Sage Intacct data source ingestion connector, including the required credentials, supported data points for ingestion, and any known limitations or considerations. 📚
+# PySpark Azure SQL Ingestion Framework
 
-## Prerequisites
+## 🔧 Description
 
-Before using this connector, ensure the following requirements are met:
+This framework enables Full Load (FL), Incremental Load (IL), and Hash-based Change Detection with Hard Delete detection from **Azure SQL** to **Delta Tables in a Lakehouse (Databricks)** using PySpark. It adds metadata and operational logging, supporting robust data movement and monitoring.
 
-### Required Credentials:
+---
 
-* **API Credentials** 🛠️: A valid Sage Intacct API key and sender ID.
-* **User Credentials** 👤: Sage Intacct username and password with appropriate permissions.
-* **Company ID** 🆔: The unique identifier for your Sage Intacct account.
-* **OAuth Token** 🔑: If using OAuth authentication, an access token with the appropriate scope.
-* **Other Required Credentials** 💼: Any other specific credentials, such as access keys or client secrets.
+## 📁 Features
 
-### Data Source URL:
+* 🔄 **Full Load** with metadata columns
+* ⏱️ **Incremental Load** with datetime field
+* 🧠 **Hash-Based Change Detection** for inserts and updates
+* ❌ **Hard Delete Detection** for physically deleted records
+* 🔐 Encodes `VARBINARY` fields using Base64
+* 📄 Centralized logging of each data movement job
 
-Provide the Sage Intacct API base URL:
-API Endpoint: [https://api.intacct.com/ia/xml/xmlgw.phtml](https://api.intacct.com/ia/xml/xmlgw.phtml) 🌐
+---
 
-## Data Points for Ingestion
+## 🌐 Data Source URL
 
-The following data points are supported by the connector:
+Data is ingested from **Azure SQL Database** using the **JDBC** URL format:
 
-1. **Customers** 👥: Customer account details and contact information.
-2. **Vendors** 🏢: Supplier and vendor information.
-3. **General Ledger** 📊: Journal entries, transactions, and account balances.
-4. **Accounts Payable** 💳: Invoice and payment tracking for vendors.
-5. **Accounts Receivable** 💰: Customer invoices, payments, and aging reports.
-6. **Purchase Orders** 🛒: Procurement records and approvals.
-7. **Sales Orders** 🧾: Sales transactions and order processing.
-8. **Employee Expenses** 💼: Expense reports and reimbursements.
-9. **Projects** 📈: Project-related financials and tracking.
-10. **Inventory** 📦: Stock levels and inventory movement tracking.
+```text
+jdbc:sqlserver://<hostname>:<port>;database=<db_name>;encrypt=true;trustServerCertificate=true
+```
 
-Note: The available data points may vary based on the configuration and permissions granted to the connector.
+The credentials are securely passed using Spark configuration or secrets.
 
-## Supported tools
+---
 
-* ✅ **ADF (Azure Data Factory)**
-* ✅ **Fabric**
+## 📦 Prerequisites
 
-## Supported Destination
+* Apache Spark with Delta Lake
+* Databricks (preferred) or Spark environment
+* Azure SQL DB with access credentials
+* Microsoft JDBC driver (loaded via Spark config or cluster)
 
-### Files
+---
 
-* ✅ **Parquet** 🗂️
+## 📊 Data Points for Ingestion
 
-### Lakehouse
+The ingestion framework is built to work with **any structured table** in Azure SQL. It supports:
 
-* ✅ **Fabric - Lakehouse** 🌊
+* All scalar SQL types (INT, BIGINT, VARCHAR, DATETIME, etc.)
+* **Binary columns** (`VARBINARY`) → converted to Base64 string
+* Optional filtering for **Incremental Load** using a datetime column
+* Composite primary keys using `|` separator
 
-### **Data Warehouse / Database**
+---
 
-* ✅ **Fabric - Warehouse** 🏢
+## 🛠️ Supported Tools
 
-## Limitations:
+| Tool              | Purpose                                    |
+| ----------------- | ------------------------------------------ |
+| ✅**PySpark**       | Core processing engine                     |
+| ✅**Azure SQL**     | Source system for structured data          |
+| ✅**Delta Lake**    | Destination table format with ACID support |
+| ✅**Databricks**    | Primary execution environment              |
+| ✅**JDBC Driver**   | Connectivity with Azure SQL Server         |
+| ✅**Spark Catalog** | For metadata tracking & logging            |
 
-1. **API Rate Limiting** ⚠️: Sage Intacct imposes API rate limits, which may restrict the frequency of data requests. Be mindful of these limits to avoid failures.
-2. **Pagination Handling** 🔢: Large datasets require pagination when making API calls.
-3. **Data Sync Delays** ⏳: Sage Intacct data may not always be updated in real time.
-4. **Data Type Constraints** 🧑‍💻: Some fields, especially custom properties, may have inconsistent data types.
-5. **Time Zone Handling** 🕰️: Timestamps in Sage Intacct are stored in UTC and may require conversion.
-6. **Schema Changes** 🔄: Any modifications to Sage Intacct object schemas may require updates to the ingestion pipeline.
+---
+
+## 🎯 Supported Destinations
+
+This framework writes data to:
+
+* ✅**Databricks Lakehouse** using **Delta Tables**
+
+---
+
+
+## 🧾 Logging Table Schema
+
+All load operations are tracked in:
+**`catalog.raw.connector_sql.vp_monitor_hard_delete_log`**
+
+| Column Name    | Description                       |
+| -------------- | --------------------------------- |
+| source\_type   | Type of source (e.g., SQL Server) |
+| source\_name   | Friendly name of source           |
+| source\_schema | Schema name in Azure SQL          |
+| source\_table  | Table name in Azure SQL           |
+| sink\_schema   | Lakehouse schema                  |
+| sink\_table    | Lakehouse table                   |
+| load\_type     | FL / IL / Hash                    |
+| row\_count     | No. of rows ingested              |
+| status         | `Success` or `Fail`               |
+| message        | Descriptive message               |
+| log\_date      | Timestamp of the log entry        |
+
+---
+
+## ⚠️ Limitations
+
+* ❌ Does **not support nested or JSON fields** in SQL Server.
+* ❌ Requires pre-created target schemas/tables in Lakehouse.
+* 🛑 Assumes **no changes in schema structure** during loads.
+* ⚠️ Composite keys must be passed using `|`-delimited string.
+* ⚠️ Performance is limited by network latency and JDBC read speeds.
+* 🧪 Not intended for real-time streaming or micro-batch ingestion.
+* 💾 **Only Delta tables** are supported for sink output.
+
+---
+
+
