@@ -32,10 +32,10 @@ The credentials are securely passed using Spark configuration or secrets.
 
 ---
 ## 🔐 Required Credentials
-# Azure SQL Credentials
+## Azure SQL Credentials
 These are needed to connect to the source database using JDBC.
 
-# Key	Description
+## Key	Description
 * source_user	Username to authenticate to the Azure SQL database
 * source_password	Password for the given username
 * source_host	Azure SQL Server hostname (e.g., yourserver.database.windows.net)
