@@ -31,6 +31,16 @@ jdbc:sqlserver://<hostname>:<port>;database=<db_name>;encrypt=true;trustServerCe
 The credentials are securely passed using Spark configuration or secrets.
 
 ---
+## 🔐 Required Credentials
+# Azure SQL Credentials
+These are needed to connect to the source database using JDBC.
+
+# Key	Description
+* source_user	Username to authenticate to the Azure SQL database
+* source_password	Password for the given username
+* source_host	Azure SQL Server hostname (e.g., yourserver.database.windows.net)
+* source_port	Typically 1433
+* source_database	Name of the database to connect to
 
 ## 📦 Prerequisites
 
@@ -54,14 +64,12 @@ The ingestion framework is built to work with **any structured table** in Azure 
 
 ## 🛠️ Supported Tools
 
-| Tool              | Purpose                                    |
-| ----------------- | ------------------------------------------ |
-| ✅**PySpark**       | Core processing engine                     |
-| ✅**Azure SQL**     | Source system for structured data          |
-| ✅**Delta Lake**    | Destination table format with ACID support |
-| ✅**Databricks**    | Primary execution environment              |
-| ✅**JDBC Driver**   | Connectivity with Azure SQL Server         |
-| ✅**Spark Catalog** | For metadata tracking & logging            |
+| Tool                      | Purpose                                    |
+| -----------------         | ------------------------------------------ |
+| ✅**Python(PySpark)**    | Core processing engine                     |
+| ✅**Azure SQL**          | Source system for structured data          |
+| ✅**Delta Lake**         | Destination table format with ACID support |
+| ✅**Databricks**         | Primary execution environment              |
 
 ---
 
@@ -69,7 +77,12 @@ The ingestion framework is built to work with **any structured table** in Azure 
 
 This framework writes data to:
 
-* ✅**Databricks Lakehouse** using **Delta Tables**
+# Files
+* **✅CSV**
+* **✅Parkquet**
+
+# Lakehouse
+* **✅Databricks Lakehouse** using **Delta Tables**
 
 ---
 
