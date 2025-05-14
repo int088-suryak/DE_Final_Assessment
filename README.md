@@ -109,7 +109,6 @@ All load operations are tracked in:
 * ❌ Does **not support nested or JSON fields** in SQL Server.
 * ❌ Requires pre-created target schemas/tables in Lakehouse.
 * 🛑 Assumes **no changes in schema structure** during loads.
-* ⚠️ Composite keys must be passed using `|`-delimited string.
 * ⚠️ Performance is limited by network latency and JDBC read speeds.
 * 🧪 Not intended for real-time streaming or micro-batch ingestion.
 * 💾 **Only Delta tables** are supported for sink output.
