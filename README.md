@@ -1,4 +1,3 @@
-Thanks for pointing that out, Surya! Here's the **updated and complete `README.md` file** with your requested topics included:
 
 ---
 
