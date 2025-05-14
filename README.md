@@ -77,10 +77,6 @@ The ingestion framework is built to work with **any structured table** in Azure 
 
 This framework writes data to:
 
-# Files
-* **✅CSV**
-* **✅Parkquet**
-
 # Lakehouse
 * **✅Databricks Lakehouse** using **Delta Tables**
 
