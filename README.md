@@ -3,7 +3,7 @@
 
 # PySpark Azure SQL Ingestion Framework
 
-## 🔧 Description
+## 🔧 Overview
 
 This framework enables Full Load (FL), Incremental Load (IL), and Hash-based Change Detection with Hard Delete detection from **Azure SQL** to **Delta Tables in a Lakehouse (Databricks)** using PySpark. It adds metadata and operational logging, supporting robust data movement and monitoring.
 
