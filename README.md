@@ -103,3 +103,6 @@ The connector includes basic error handling. You may want to enhance it with:
 ### 🚀 **Ready to Deploy?**
 
 Follow the setup guide, configure credentials, and start ingesting Business Central data into Azure Synapse seamlessly!
+
+# **References**
+* https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/api-reference/v2.0/
