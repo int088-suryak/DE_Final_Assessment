@@ -1,118 +1,67 @@
+# 📡 Business Central Data Ingestion Connector
 
----
+## 📘 Overview
 
-# PySpark Azure SQL Ingestion Framework
+This connector extracts data from Microsoft Business Central via API, processes it, and stores it in Azure Synapse. The connector handles API authentication, data preprocessing, and manages the data pipeline to ensure consistent data storage and availability for analytics.
 
-## 🔧 Overview
+### 🌐 Data Source URL:
 
-This framework enables Full Load (FL), Incremental Load (IL), and Hash-based Change Detection with Hard Delete detection from **Azure SQL** to **Delta Tables in a Lakehouse (Databricks)** using PySpark. It adds metadata and operational logging, supporting robust data movement and monitoring.
+* Business Central API: `https://api.businesscentral.dynamics.com/v2.0/{company_id}/Production/ODataV4/Company({company_name})`
+* Token URL: `https://login.microsoftonline.com/{company_id}/oauth2/v2.0/token`
 
----
+## 🔁 The connector performs the following steps:
 
-## 📁 Features
+1. Authenticate with Business Central API.
+2. Fetch data from configured endpoints.
+3. Process and transform the data.
+4. Save the data to Azure Synapse in Parquet format.
 
-* 🔄 **Full Load** with metadata columns
-* ⏱️ **Incremental Load** with datetime field
-* 🧠 **Hash-Based Change Detection** for inserts and updates
-* ❌ **Hard Delete Detection** for physically deleted records
-* 🔐 Encodes `VARBINARY` fields using Base64
-* 📄 Centralized logging of each data movement job
+## 🗂️ Folder Structure
 
----
+Extracted data is stored in a date-based folder structure:
 
-## 🌐 Data Source URL
-
-Data is ingested from **Azure SQL Database** using the **JDBC** URL format:
-
-```text
-jdbc:sqlserver://<hostname>:<port>;database=<db_name>;encrypt=true;trustServerCertificate=true
+```
+<your_blob_storage_path>/<end_point>/{year}/{month}/{day}/temp/{endpoint}
 ```
 
-The credentials are securely passed using Spark configuration or secrets.
+## ⚙️ Configuration
 
----
-## 🔐 Required Credentials
-## Azure SQL Credentials
-These are needed to connect to the source database using JDBC.
+Before execution, update the following values in the script:
 
-## Key	Description
-* source_user	Username to authenticate to the Azure SQL database
-* source_password	Password for the given username
-* source_host	Azure SQL Server hostname (e.g., yourserver.database.windows.net)
-* source_port	Typically 1433
-* source_database	Name of the database to connect to
+### 🌍 **Environment Variables**
 
-## 📦 Prerequisites
+```bash
+BC_CLIENT_ID='<your_client_id>'
+BC_SECRET='<your_client_secret>'
+BC_COMPANY_ID='<your_company_id>'
+BC_COMPANY_NAME='<your_company_name>'
+```
 
-* Apache Spark with Delta Lake
-* Databricks (preferred) or Spark environment
-* Azure SQL DB with access credentials
-* Microsoft JDBC driver (loaded via Spark config or cluster)
+### 🧾 **Script Variables**
 
----
+```python
+server = '<your_synapse_server>'
+database = '<your_database>'
+username = '<your_username>'
+password = '<your_password>'
+blob_account = '<your_blob_storage_path>'
+source_path = '<your_mapping_file_path>'
+```
 
-## 📊 Data Points for Ingestion
+### 🔐 **Authentication Variables**
 
-The ingestion framework is built to work with **any structured table** in Azure SQL. It supports:
+```python
+kv_name = '<your_keyvault_name>'
+secret_name = '<your_secret_name>'
+linked_service_name = '<your_linked_service_name>'
+```
 
-* All scalar SQL types (INT, BIGINT, VARCHAR, DATETIME, etc.)
-* **Binary columns** (`VARBINARY`) → converted to Base64 string
-* Optional filtering for **Incremental Load** using a datetime column
-* Composite primary keys using `|` separator
+## 🛠️ Template Customization
 
----
+This code is provided as a template that you can customize for your specific environment:
 
-## 🛠️ Supported Tools
-
-| Tool                      | Purpose                                    |
-| -----------------         | ------------------------------------------ |
-| ✅**Python(PySpark)**    | Core processing engine                     |
-| ✅**Azure SQL**          | Source system for structured data          |
-| ✅**Delta Lake**         | Destination table format with ACID support |
-| ✅**Databricks**         | Primary execution environment              |
-
----
-
-## 🎯 Supported Destinations
-
-This framework writes data to:
-
-# Lakehouse
-* **✅Databricks Lakehouse** using **Delta Tables**
-
----
-
-
-## 🧾 Logging Table Schema
-
-All load operations are tracked in:
-**`catalog.raw.connector_sql.vp_monitor_hard_delete_log`**
-
-| Column Name    | Description                       |
-| -------------- | --------------------------------- |
-| source\_type   | Type of source (e.g., SQL Server) |
-| source\_name   | Friendly name of source           |
-| source\_schema | Schema name in Azure SQL          |
-| source\_table  | Table name in Azure SQL           |
-| sink\_schema   | Lakehouse schema                  |
-| sink\_table    | Lakehouse table                   |
-| load\_type     | FL / IL / Hash                    |
-| row\_count     | No. of rows ingested              |
-| status         | `Success` or `Fail`               |
-| message        | Descriptive message               |
-| log\_date      | Timestamp of the log entry        |
-
----
-
-## ⚠️ Limitations
-
-* ❌ Does **not support nested or JSON fields** in SQL Server.
-* ❌ Requires pre-created target schemas/tables in Lakehouse.
-* 🛑 Assumes **no changes in schema structure** during loads.
-* ⚠️ Performance is limited by network latency and JDBC read speeds.
-* 🧪 Not intended for real-time streaming or micro-batch ingestion.
-* 💾 **Only Delta tables** are supported for sink output.
-
----
-
-
+1. Replace all placeholder values (indicated by `<placeholder_name>`) with your actual configuration values
+2. Verify the path structures for source and output files
+3. Update the data preprocessing function if additional field conversions are needed
+4. Adjust schema inference logic if needed for your specific Business Central endpoints
+5. Add any additional error handling specific to your environment
